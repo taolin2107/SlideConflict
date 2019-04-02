@@ -28,7 +28,7 @@ public class MyFrameLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // Down事件要流到子view
+        // Down事件要流到子view，由子view判断是否需要父view拦截
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             return false;
         } else {
@@ -44,7 +44,7 @@ public class MyFrameLayout extends FrameLayout {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 LayoutParams l = (LayoutParams) getLayoutParams();
-                // 计算当前位置离顶部的距离
+                // 计算当前位置离父view顶部的距离
                 rowY = event.getRawY() - l.topMargin;
                 break;
             }

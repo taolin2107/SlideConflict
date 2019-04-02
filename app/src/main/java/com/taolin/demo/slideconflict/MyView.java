@@ -15,6 +15,9 @@ import android.widget.FrameLayout;
  */
 public class MyView extends View {
 
+    // 子view能滑动的距离，是父view减去子view的长度300-80
+    private float slideLength = 220 * getResources().getDisplayMetrics().density;
+
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -33,6 +36,7 @@ public class MyView extends View {
             case MotionEvent.ACTION_DOWN: {
                 getParent().requestDisallowInterceptTouchEvent(true);
                 FrameLayout.LayoutParams l = (FrameLayout.LayoutParams) getLayoutParams();
+                // 计算当前位置离父view顶部的距离
                 rowY = event.getRawY() - l.topMargin;
                 lastY = event.getRawY();
                 return true;
@@ -42,19 +46,20 @@ public class MyView extends View {
                 FrameLayout.LayoutParams l = (FrameLayout.LayoutParams) getLayoutParams();
                 float currentY = event.getRawY();
                 float marginTop = l.topMargin;
-                if (marginTop < 2) {
+                if (marginTop < 0) {
                     if (lastY > currentY) {
                         // 滑到顶部了，继续往上滑就交给父view
                         getParent().requestDisallowInterceptTouchEvent(false);
                         return false;
                     }
-                } else if (marginTop > 328) {
+                } else if (marginTop > slideLength) {
                     if (lastY < currentY) {
                         // 滑到底部了，继续往下滑就交给父view
                         getParent().requestDisallowInterceptTouchEvent(false);
                         return false;
                     }
                 }
+                // 当前位置减去距离顶部的距离，就是marginTop
                 l.topMargin = (int)(currentY - rowY);
                 lastY = currentY;
                 setLayoutParams(l);

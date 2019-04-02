@@ -6,9 +6,8 @@
 
     <com.taolin.demo.slideconflict.MyFrameLayout
         android:id="@+id/parent"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="100dp"
-        android:layout_gravity="end"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
         android:background="#ff0000"
         android:layout_width="120dp"
         android:layout_height="300dp">
